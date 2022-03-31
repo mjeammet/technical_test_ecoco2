@@ -23,14 +23,14 @@ class Command(BaseCommand):
 
         # Get data from Measure table and set new frequency
         measures = pd.DataFrame(
-            [(data.datetime, data.co2_rate) for data in Measure.objects.all()],
-            columns=['datetime', 'co2_rate'])
-        measures = measures.set_index('datetime')
+            [(data.date_time, data.co2_rate) for data in Measure.objects.all()],
+            columns=['date_time', 'co2_rate'])
+        measures = measures.set_index('date_time')
 
         other_frequency = pd.date_range(start=start, end=end, freq='1H')
         dataframe = measures[measures.index.isin(other_frequency)].reset_index()
         
-        dataframe = dataframe.set_index('datetime')
+        dataframe = dataframe.set_index('date_time')
     
         dataframe = dataframe.reindex(
             pd.date_range(start=start, end=end, freq='30min'))
@@ -41,11 +41,11 @@ class Command(BaseCommand):
 
         # Reset index to print datetime correctly
         dataframe.reset_index(inplace=True)
-        dataframe = dataframe.rename(columns = {'index':'datetime'})
+        dataframe = dataframe.rename(columns = {'index':'date_time'})
         # print(new_dataframe)
 
         # Fill Django table with Interpolated data
         InterpolateData.objects.bulk_create(
-            [InterpolateData(datetime=dataframe.loc[j, 'datetime'], co2_rate=dataframe.loc[j, 'co2_rate']) for j in range(len(dataframe))])
+            [InterpolateData(date_time=dataframe.loc[j, 'date_time'], co2_rate=dataframe.loc[j, 'co2_rate']) for j in range(len(dataframe))])
 
         print(f"Succesfully interpolated data.")

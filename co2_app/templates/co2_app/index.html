@@ -1,5 +1,48 @@
-Yo
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Comparison between real and interpolated data</h1>
+    <hr>
+    {% if diff_table %}
+        <table>
+            <thead>
+                <tr>
+                    <td>Date</td>
+                    <td>Real data</td>
+                    <td>Interpolated_data</td>
+                    <td>Difference</td>
+                </tr>
+            </thead>
+            <tr></tr>
+        {% for record in diff_table %}
+            <tr>
+                <td>{{ record.date_time }}</td>
+                <td>{{ record.real_data }}</td>
+                <td>{{ record.interpolated_data }}</td>
+                <td>{{ record.difference }}</td>
+            </tr>
+        {% endfor %}
+        {% if average_rates %}
+            <tr>
+                <td colspan="4" style="text-align: center;">Average rates</td>
+            </tr>
+            {% for average_value in average_rates %}
+            <tr>
+                <td>{{ average_value.date_time }}</td>
+                <td>{{ average_value.real_data }}</td>
+                <td>{{ average_value.interpolated_data }}</td>
+            </tr>
+            {% endfor %}
+        {% endif %}
 
-{{ last_measurements }}
+        </table>
+    {% endif %}
 
-{{ last_interpolations }}
+</body>
+</html>

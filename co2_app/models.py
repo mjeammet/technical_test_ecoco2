@@ -7,11 +7,11 @@ class User(AbstractUser):
 
 
 class Measure(models.Model):    
-    datetime = models.DateTimeField() # Should it be unique ?
+    date_time = models.DateTimeField() # Should it be unique ?
     co2_rate = models.PositiveSmallIntegerField()
 
 
 class InterpolateData(models.Model):
     # Wanted to inherit from Measure but not compatible with bulk.create()    
-    datetime = models.DateTimeField() # Should it be unique ?
+    date_time = models.DateTimeField() # Should it be unique ?
     co2_rate = models.PositiveSmallIntegerField()

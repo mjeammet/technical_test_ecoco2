@@ -39,6 +39,6 @@ class Command(BaseCommand):
         print(f"Loading {len(collected_data)} entries")
         id_offset = 0 if previous_count == 0 else previous_count+1
         Measure.objects.bulk_create(
-            [Measure(id=id_offset+i, datetime=collected_data[i]['datetime'], co2_rate=collected_data[i]['co2_rate']) for i in range(len(collected_data))])
+            [Measure(id=id_offset+i, date_time=collected_data[i]['datetime'], co2_rate=collected_data[i]['co2_rate']) for i in range(len(collected_data))])
     
         print(f"Succesfully loaded {len(collected_data)} entries.")
