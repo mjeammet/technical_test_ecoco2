@@ -9,8 +9,8 @@ import requests
 endpoint = 'http://api-recrutement.ecoco2.com/v1/data/'
 datetime_format =  "%Y-%m-%dT%H:%M:%S"
 start = datetime.timestamp(datetime.strptime("2017-01-01T00:00:00", datetime_format))
-end = datetime.timestamp(datetime.strptime("2017-01-01T20:00:00", datetime_format))
-# end = datetime.timestamp(datetime.strptime("2018-12-31T23:59:59", "%Y-%m-%dT%H:%M:%S"))
+# end = datetime.timestamp(datetime.strptime("2017-01-01T20:00:00", datetime_format))
+end = datetime.timestamp(datetime.strptime("2018-12-31T23:59:59", datetime_format))
 
 
 class Command(BaseCommand):

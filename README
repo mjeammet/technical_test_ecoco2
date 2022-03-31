@@ -35,7 +35,26 @@ pip install -r requirements.txt
 
 CO2 data are loaded from [http://api-recrutement.ecoco2.com/v1/data/](recruitment public API) and interpolated using pandas.
 
-You can reload all data or simply use provided db.sqlite3 file (as data importation takes some time).
+You can reload all data or simply use provided db.sqlite3 file.
 
-To reload database, use `python manage.py import_data`.
-To recreate interpolated data,  use `python manage.py interpolate_data`.
+To re-import data:
+```
+# Flush existing data
+python manage.py flush
+
+# Load data from API
+python manage.py import_data` 
+
+# Interpolate data
+python manage.py interpolate_data
+```
+
+## Running the server
+
+```
+# Load the environment if you haven't already
+source env/bin/activate
+
+# Runserver
+python manage.py runserver
+```

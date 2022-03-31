@@ -44,5 +44,9 @@
         </table>
     {% endif %}
 
+    {% if diff_graph %}
+        <img src="data:image/png;base64, {{diff_graph|safe}}" alt="" width='100%'>
+    {% endif %}
+
 </body>
 </html>
