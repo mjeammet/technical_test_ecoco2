@@ -1,30 +1,28 @@
-Test technique EcoCO2
+# Technical test EcoCO2
+
+![https://www.ecoco2.com/wp-content/uploads/2020/12/logo-ecoco2.jpg](https://www.ecoco2.com/wp-content/uploads/2020/12/logo-ecoco2.jpg)
 
 # Context
 
-Quick app to gather CO2 info from public API, interpolate data and visualize the differences between interpolated and real data.
+Simple app to gather CO2 info from public API, interpolate data and visualize the differences between real and interpolated data.
 
-Instructions were:
-- Récupérer les données de taux de CO2 en France pour les années 2017 et 2018 à partir de l'API décrite ici https://api-recrutement.ecoco2.com/docs/#tag/v1
-
-- Stocker dans une table Django.
-
-- Filtrer les données pour produire une deuxième table avec une fréquence horaire.
-
-- À partir de la table horaire, interpoler les résultats pour (re)obtenir la même fréquence initiale de 30 minutes.
-
-- Afficher les 20 derniers points dans un tableau avec la différence entre la vraie donnée et la donnée interpolée.
-
-- Pour chaque donnée (réelle et interpolée), rajouter une ligne au tableau avec la moyenne pour les jours ouvrés, et les weekends.
-
-- Ajouter un graphe de la différence entre les deux données.
+Instructions were to:
+- Gather data relative to French co2 rate between 2017 and 2018 from this API https://api-recrutement.ecoco2.com/docs/#tag/v1
+- Save data to a Django table.
+- Filter data to obtain an hourly frequency and save it to a second table.
+- From the hourly table, interpolate data to re(obtain) initial frequency of 30 minutes.
+- Show last 20 points in a table with difference between real and interpolated data.
+- For each data (real and interpolated), add a line with average rate for weekdays and weekends.
+- Add a graph showing the difference between the two datasets.
 
 # Installation
 
 ```
-git clone
+# Initialize and activate virtual environment 
 python -m venv env
 source env/bin/activate
+
+# Upgrade pip and install required packages
 pip install --upgrade pip
 pip install -r requirements.txt
 ```
@@ -33,7 +31,7 @@ pip install -r requirements.txt
 
 ## Data import
 
-CO2 data are loaded from [http://api-recrutement.ecoco2.com/v1/data/](recruitment public API) and interpolated using pandas.
+CO2 data are loaded from [recruitment public API](http://api-recrutement.ecoco2.com/v1/data/) and interpolated using pandas.
 
 You can reload all data or simply use provided db.sqlite3 file.
 
@@ -43,7 +41,7 @@ To re-import data:
 python manage.py flush
 
 # Load data from API
-python manage.py import_data` 
+python manage.py import_data
 
 # Interpolate data
 python manage.py interpolate_data
@@ -58,3 +56,5 @@ source env/bin/activate
 # Runserver
 python manage.py runserver
 ```
+
+Access server and results by visiting [http://127.0.0.1:8000/](http://127.0.0.1:8000/)

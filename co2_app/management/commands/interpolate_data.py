@@ -1,10 +1,9 @@
 from django.core.management.base import BaseCommand
-
-from co2_app.models import Measure, InterpolateData
-
 from datetime import datetime
 import pandas as pd
 import matplotlib
+
+from co2_app.models import Measure, InterpolateData
 
 datetime_format =  "%Y-%m-%dT%H:%M:%S"
 start = '2017-01-01T00:00:00'
@@ -17,9 +16,7 @@ class Command(BaseCommand):
         # Clean slate
         InterpolateData.objects.all().delete()
 
-        # Based on https://github.com/sebsanpro/test_ecoco2/blob/master/co2_rate/views.py
-        # for panda data handling 
-        # Cause we used R in my previous job :( 
+        # Based on https://github.com/sebsanpro/test_ecoco2/blob/master/co2_rate/views.py for panda data handling 
 
         # Get data from Measure table and set new frequency
         measures = pd.DataFrame(

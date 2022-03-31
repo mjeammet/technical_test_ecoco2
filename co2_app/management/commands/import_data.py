@@ -1,15 +1,12 @@
 from django.core.management.base import BaseCommand
-
-from co2_app.models import Measure, InterpolateData
-
 from datetime import datetime
 import requests
 
+from co2_app.models import Measure, InterpolateData
 
 endpoint = 'http://api-recrutement.ecoco2.com/v1/data/'
 datetime_format =  "%Y-%m-%dT%H:%M:%S"
 start = datetime.timestamp(datetime.strptime("2017-01-01T00:00:00", datetime_format))
-# end = datetime.timestamp(datetime.strptime("2017-01-01T20:00:00", datetime_format))
 end = datetime.timestamp(datetime.strptime("2018-12-31T23:59:59", datetime_format))
 
 

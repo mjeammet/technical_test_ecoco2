@@ -4,49 +4,56 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Test index</title>
 </head>
 <body>
-    <h1>Comparison between real and interpolated data</h1>
+    <h1>Comparing real and interpolated data for last records of 2018</h1>
     <hr>
-    {% if diff_table %}
-        <table>
+    <div style="display: inline-flex; margin: 3%;">
+        {% if diff_table and average_rates %}
+        <table style="width: 35%;">
             <thead>
                 <tr>
-                    <td>Date</td>
-                    <td>Real data</td>
-                    <td>Interpolated_data</td>
-                    <td>Difference</td>
+                    <th>Date</td>
+                    <th>Time</th>
+                    <th>Real data</td>
+                    <th>Interpolated data</td>
+                    <th>Diff</td>
                 </tr>
             </thead>
-            <tr></tr>
-        {% for record in diff_table %}
-            <tr>
-                <td>{{ record.date_time }}</td>
-                <td>{{ record.real_data }}</td>
-                <td>{{ record.interpolated_data }}</td>
-                <td>{{ record.difference }}</td>
-            </tr>
-        {% endfor %}
-        {% if average_rates %}
-            <tr>
-                <td colspan="4" style="text-align: center;">Average rates</td>
-            </tr>
-            {% for average_value in average_rates %}
-            <tr>
-                <td>{{ average_value.date_time }}</td>
-                <td>{{ average_value.real_data }}</td>
-                <td>{{ average_value.interpolated_data }}</td>
-            </tr>
-            {% endfor %}
-        {% endif %}
-
+            <tbody>
+                {% for record in diff_table %}
+                    <tr>
+                        <td>{{ record.date_time.date }}</td>
+                        <td>{{ record.date_time.time }}</td>
+                        <td>{{ record.real_data }}</td>
+                        <td>{{ record.interpolated_data }}</td>
+                        <td>{{ record.difference }}</td>
+                    </tr>
+                {% endfor %}
+                <tr>
+                    <td colspan="4" style="text-align: center;">Average rates</td>
+                </tr>
+                {% for average_value in average_rates %}
+                <tr>
+                    <td colspan="2">{{ average_value.period }}</td>
+                    <td>{{ average_value.real_data }}</td>
+                    <td>{{ average_value.interpolated_data }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
         </table>
+    {% else %}
+        <p>Oh noo, something is missing here. Please check database is correctly configured and that API data has been loaded and interpolated.</p>
     {% endif %}
 
     {% if diff_graph %}
         <img src="data:image/png;base64, {{diff_graph|safe}}" alt="" width='100%'>
     {% endif %}
 
+    </div>
+    <footer style="text-align: center;">
+        Marie J., March 31, 2022
+    </footer>
 </body>
 </html>
