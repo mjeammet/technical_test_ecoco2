@@ -1,12 +1,12 @@
+from .models import Measure
 from django.shortcuts import render
 
-import requests
 
 def index(request):
 
-    req = requests.get('http://api-recrutement.ecoco2.com/v1/data/')
-    print(req)
+    last_measure = Measure.objects.order_by('-datetime')[:20]
 
-
-    context = {}
+    context = {
+        'last_measurements': last_measure,
+    }
     return render(request, 'co2_app/index.html', context)

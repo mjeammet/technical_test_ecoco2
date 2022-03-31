@@ -4,6 +4,21 @@ Test technique EcoCO2
 
 Quick app to gather CO2 info from public API, interpolate data and visualize the differences between interpolated and real data.
 
+Instructions were:
+- Récupérer les données de taux de CO2 en France pour les années 2017 et 2018 à partir de l'API décrite ici https://api-recrutement.ecoco2.com/docs/#tag/v1
+
+- Stocker dans une table Django.
+
+- Filtrer les données pour produire une deuxième table avec une fréquence horaire.
+
+- À partir de la table horaire, interpoler les résultats pour (re)obtenir la même fréquence initiale de 30 minutes.
+
+- Afficher les 20 derniers points dans un tableau avec la différence entre la vraie donnée et la donnée interpolée.
+
+- Pour chaque donnée (réelle et interpolée), rajouter une ligne au tableau avec la moyenne pour les jours ouvrés, et les weekends.
+
+- Ajouter un graphe de la différence entre les deux données.
+
 # Installation
 
 ```
@@ -12,3 +27,16 @@ python -m venv env
 source env/bin/activate
 pip install --upgrade pip
 ```
+
+# Use
+
+## Data import
+
+CO2 data are loaded from [http://api-recrutement.ecoco2.com/v1/data/](recruitment public API).
+
+You can reload all data comprised between start and end datetime, or simply use provided db.sqlite3 file as data importation takes some time.
+
+To reload database, use `python manage.py import_data`.
+
+## 
+
