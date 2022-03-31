@@ -1,20 +1,20 @@
 from django.core.management.base import BaseCommand
 
-from co2_app.models import Measure
+from co2_app.models import Measure, InterpolateData
 
 from datetime import datetime
 import requests
 
 
 endpoint = 'http://api-recrutement.ecoco2.com/v1/data/'
-# query parameters must be decimals. See https://api-recrutement.ecoco2.com/docs/#tag/v1
-start = datetime.timestamp(datetime.strptime("2017-01-01T00:00:00", "%Y-%m-%dT%H:%M:%S"))
-# end = datetime.timestamp(datetime.strptime("2017-01-01T03:00:00", "%Y-%m-%dT%H:%M:%S"))
-end = datetime.timestamp(datetime.strptime("2018-12-31T23:59:59", "%Y-%m-%dT%H:%M:%S"))
+datetime_format =  "%Y-%m-%dT%H:%M:%S"
+start = datetime.timestamp(datetime.strptime("2017-01-01T00:00:00", datetime_format))
+end = datetime.timestamp(datetime.strptime("2017-01-01T20:00:00", datetime_format))
+# end = datetime.timestamp(datetime.strptime("2018-12-31T23:59:59", "%Y-%m-%dT%H:%M:%S"))
 
 
 class Command(BaseCommand):
-    help = 'Loads CO2 data from public API. Flush database'
+    help = 'Loads CO2 data from public API and prepare secondary table for interpolation.'
 
     def handle(self, *args, **kwargs):
 
@@ -34,11 +34,11 @@ class Command(BaseCommand):
             raise Exception("Could not fetch data. Check API status at http://api-recrutement.ecoco2.com/v1/data/")
         collected_data = response.json()
 
-        # Add collected data to local database
-        added_entries = 0
-        for measure in collected_data:
-            measure = Measure(datetime=measure['datetime'], co2_rate=measure["co2_rate"])
-            measure.save()
-            added_entries += 1
 
-        print(f"Database succesfully loaded. Added {added_entries} entries.")
+        # Fill real data table
+        print(f"Loading {len(collected_data)} entries")
+        id_offset = 0 if previous_count == 0 else previous_count+1
+        Measure.objects.bulk_create(
+            [Measure(id=id_offset+i, datetime=collected_data[i]['datetime'], co2_rate=collected_data[i]['co2_rate']) for i in range(len(collected_data))])
+    
+        print(f"Succesfully loaded {len(collected_data)} entries.")

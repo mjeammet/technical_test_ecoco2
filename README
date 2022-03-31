@@ -32,11 +32,9 @@ pip install --upgrade pip
 
 ## Data import
 
-CO2 data are loaded from [http://api-recrutement.ecoco2.com/v1/data/](recruitment public API).
+CO2 data are loaded from [http://api-recrutement.ecoco2.com/v1/data/](recruitment public API) and interpolated using pandas.
 
-You can reload all data comprised between start and end datetime, or simply use provided db.sqlite3 file as data importation takes some time.
+You can reload all data or simply use provided db.sqlite3 file (as data importation takes some time).
 
 To reload database, use `python manage.py import_data`.
-
-## 
-
+To recreate interpolated data,  use `python manage.py interpolate_data`.
